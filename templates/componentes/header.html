@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    {% block links %}
+    {% endblock %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@100;200;300;400;500;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&display=swap');
+
+        * {
+            margin: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .MainNav {
+            height: 60px;
+            width: 100%;
+            background-color: rgb(15, 1, 165);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #logo {
+            margin-left: 10px;
+            text-decoration: none;
+            color: white;
+            margin-right: 30px;
+        }
+
+        #NavbarIzq {
+            float: left;
+        }
+
+        #NavbarIzq ul li {
+            list-style: none;
+            display: inline-block;
+            padding: 0px 10px;
+        }
+
+        #NavbarIzq ul li a {
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.5s ease-out;
+        }
+
+        #NavbarIzq ul li a:hover {
+            color: rgb(194, 194, 194);
+        }
+
+        #NavbarDer {
+            float: right;
+            margin-right: 50px;
+        }
+
+        #NavbarDer ul li a {
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.5s ease-out;
+        }
+
+        #NavbarDer ul li {
+            list-style: none;
+            display: inline-block;
+            padding: 0px 10px;
+        }
+
+        #NavbarDer ul li a:hover {
+            color: rgb(194, 194, 194);
+        }
+
+        /* INICIO CSS INDEX */
+
+        .Banner {
+            height: 600px;
+            width: 100%;
+            background-color: rgb(4, 179, 203)
+            ;
+            display: flex;
+            align-items: center;
+            --mask:
+                radial-gradient(51.61px at 50% calc(100% - 72.00px), #000 99%, #0000 101%) calc(50% - 60px) 0/120px 100%,
+                radial-gradient(51.61px at 50% calc(100% + 42.00px), #0000 99%, #000 101%) 50% calc(100% - 30px)/120px 100% repeat-x;
+            -webkit-mask: var(--mask);
+            mask: var(--mask);
+        }
+
+        .contLeft {
+            background-image: url("{% static 'img/mujer-trabajando.png' %}");
+            width: 600px;
+            height: 400px;
+            margin-left: 100px;
+            float: left;}
+
+
+        .contRight {
+            width: 700px;
+            height: 400px;
+            float: right;
+            text-align: center;
+            margin-left: 350px;
+        }
+
+        .contRight h1 {
+            font-family: 'Heebo', sans-serif;
+            font-size: 55px;
+            color: white;
+        }
+
+        .contRight p {
+            font-family: 'Poppins', sans-serif;
+            margin-top: 30px;
+            color: whitesmoke;
+        }
+
+        .contBtn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 100px;
+        }
+
+        #btnIngresar {
+            font-family: "DM Sans", sans-serif;
+            cursor: pointer;
+            background-color: #1207a8;
+            border: none;
+            box-shadow: 0px 0px 16px 0px rgba(20, 4, 95, 0.7);
+            border-radius: 2px;
+            font-weight: bold;
+            color: white;
+            width: 200px;
+            height: 40px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        #btnIngresar:hover {
+            box-shadow: 0px 0px 16px 0px rgba(20, 48, 186, 0.7);
+        }
+
+        .mainCard {
+            margin: 0 auto;
+            width: 1640px;
+            height: 800px;
+            display: flex;
+            align-items: center;
+        }
+
+        .iCard {
+            float: left;
+            width: 500px;
+            height: 500px;
+            background-image: url("{% static 'img/atencioncliente.png' %}");
+            background-size: cover; /* Asegúrate de que cubra el área */
+            background-position: center; /* Centra la imagen */
+        }
+
+        .dCard {
+            float: right;
+            text-align: center;
+            margin-left: 350px;
+            width: 700px;
+            height: 450px;
+        }
+
+        .dCard h1 {
+            font-weight: bold;
+            font-size: 45px;
+             color: rgb(27, 7, 131);
+            font-family: 'Heebo', sans-serif;
+        }
+
+        .dCard p {
+            margin-top: 50px;
+            font-size: 25px;
+            font-family: 'Heebo', sans-serif;
+        }
+
+        .finalBody {
+            width: 100%;
+            height: 250px;
+            background-color: rgb(250, 251, 255);
+            text-align: center;
+            font-family: 'Heebo', sans-serif;
+            padding-top: 20px;
+        }
+
+        .finalBody h1 {
+            color: rgb(28, 6, 133);
+            font-size: 45px;
+        }
+
+        .finalBody p {
+            margin-top: 25px;
+            font-size: 20px;
+        }
+
+        footer {
+            margin-top: 70px;
+            background-color: #000;
+            width: 100%;
+            height: 70px;
+            display: flex;
+            align-items: center;
+        }
+
+        footer ul {
+            margin-left: 200px;
+        }
+
+        footer ul li {
+            list-style: none;
+            font-family: "DM Sans", sans-serif;
+            color: white;
+        }
+
+        footer ul li a {
+            text-align: center;
+        }
+
+        /* FIN CSS INDEX */
+    </style>
+</head>
+
+<body style="margin: 0; padding: 0;">
+    <nav>
+        <div class="MainNav" style="background-color: #000; padding: 10px; margin: 0;">
+            <div id="NavbarIzq" style="display: flex; align-items: center;">
+                <a id="logo" href="/Callcenter/" style="margin-right: 20px;">
+                    <img src="{% static 'img/DClogo.JPG' %}" style="height: 50px; width: auto;">
+                </a>
+                <ul style="list-style-type: none; padding: 0; margin: 0; display: flex; align-items: center;">
+                    <li style="margin: 0 15px;"><a href="/Callcenter/" style="color: white; text-decoration: none; font-weight: bold;">Inicio</a></li>
+                    <li style="margin: 0 15px;"><a href="/Catalogo/" style="color: white; text-decoration: none; font-weight: bold;">Volver al catalogo</a></li>
+                    {% if user.admin %}
+                    <li style="margin: 0 15px;"><a href="/GestionUsuarios/" style="color: white; text-decoration: none; font-weight: bold;">Gestion de usuarios</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div id="NavbarDer" style="display: flex; justify-content: flex-end; align-items: center;">
+                {% if user.is_authenticated %}
+                <ul style="list-style-type: none; padding: 0; margin: 0;">
+                    <li style="margin: 0;"><a href="/Logout/" style="color: white; text-decoration: none;"><i class="fa-solid fa-right-from-bracket"></i></a></li>
+                </ul>
+                {% else %}
+                <ul style="list-style-type: none; padding: 0; margin: 0; display: flex;">
+                    <li style="margin: 0 15px;"><a href="/Login/" style="color: white; text-decoration: none;">Iniciar sesión</a></li>
+                    <li style="margin: 0 15px;"><a href="/Register/" style="color: white; text-decoration: none;">Registrarse</a></li>
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    {% block content %}{% endblock %}
+    <!-- Colocar archivos js aquí -->
+    {% block js %}{% endblock %}
+    <script src="https://kit.fontawesome.com/c989e299d1.js" crossorigin="anonymous"></script>
+</body>

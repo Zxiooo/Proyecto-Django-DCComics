@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        html,
+        body {
+            height: 100%; /* Asegura que html y body ocupen el 100% de la altura */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column; /* Flexbox para organizar el contenido verticalmente */
+        }
+
+        body {
+            background: radial-gradient(circle, rgba(10, 15, 61, 0.9) 0%, rgba(0, 0, 0, 0.95) 80%); /* Mezcla de azul oscuro y negro */
+            background-attachment: fixed;
+            font-family: 'Arial', sans-serif;
+            flex: 1; /* Permite que el body ocupe el espacio restante */
+        }
+
+        .title {
+            font-family: 'Comic Neue', cursive; /* Usar la fuente cómic */
+            font-size: 70px; /* Tamaño de la fuente */
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.9); /* Blanco para el título */
+            text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.8); /* Sombra luminosa */
+            animation: glow 1.5s ease-in-out infinite alternate; /* Efecto de iluminación */
+            margin-bottom: 10px; /* Espacio entre el título y la barra de navegación */
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, rgba(10, 15, 61, 0.9) 0%, rgba(20, 29, 97, 0.9) 100%);
+            position: relative; /* Para que el texto se ilumine encima */
+            opacity: 0.9;
+        }
+
+        .navbar-brand {
+            color: rgba(255, 255, 255, 0.9); /* Color del texto */
+            font-weight: bold; /* Hacer el texto en negrita */
+        }
+
+        .navbar-brand img {
+            height: 40px; /* Ajustar el tamaño del logo */
+            margin-right: 10px; /* Espacio entre el logo y el texto */
+        }
+
+        .navbar .nav-item .nav-link {
+            color: rgba(252, 235, 168, 0.856);
+        }
+
+        .navbar .nav-item .nav-link:hover {
+            color: rgb(252, 235, 168); /* Color al pasar el mouse */
+        }
+        footer {
+            background: linear-gradient(135deg, rgba(10, 15, 61, 0.9) 0%, rgba(20, 29, 97, 0.9) 100%);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            margin-top: auto;
+            opacity: 0.9;
+            position: relative;
+        }
+
+        .customer-service-button {
+            position: absolute;
+            right: 10px; /* Ajusta la posición desde la derecha */
+            top: 10px; /* Ajusta la posición desde la parte superior */
+            display: flex;
+            align-items: center;
+            background-color: rgba(28, 39, 138, 0.9);
+            color: rgb(255, 255, 255);
+            padding: 8px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s;
+            font-size: 16px;
+        }
+
+        .customer-service-button:hover {
+            background: linear-gradient(135deg, rgba(10, 15, 61, 0.9) 0%, rgba(20, 29, 97, 0.9) 100%);
+            color: rgba(255, 242, 188, 0.979);
+            text-decoration: none; /* Quita el subrayado */
+        }
+
+        .customer-service-button i {
+            margin-right: 5px; /* Espacio entre el ícono y el texto */
+        }
+
+        .card {
+            margin: 10px;
+            opacity: 0.9;
+            /*background-color: rgb(22, 22, 22);*/
+            background: linear-gradient(135deg, rgba(10, 15, 61, 0.9) 0%, rgba(20, 29, 97, 0.9) 100%);
+            color: rgba(255, 242, 188, 0.979);
+            border-radius: 8px;
+        }
+
+        .card-img-top {
+            height: 300px;
+            object-fit: cover;
+            padding: 1px;
+            border-radius: 6px;
+        }
+
+        button {
+            /*background: linear-gradient(135deg, rgb(53, 134, 255) 0%, rgb(247, 247, 247) 100%); /* Degradado de rojo a amarillo */
+            color: rgb(245, 255, 107); /* Texto blanco */
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.4s ease-in-out;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Sombra para dar efecto de profundidad */
+        }
+    </style>
+
+    <title>{% block title %}DC Universe Peliculas y Series{% endblock %}</title>
+
+</head>
+
+<body>
+
+    {% load static %} <!-- Cargar la etiqueta static -->
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'pelicula-list' %}">
+                <img src="{% static 'images/DClogo.JPG' %}" alt="Logo DC Universe" class="logo"> <!-- Cambia esta ruta al logo -->
+                DC Universe
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <strong><a class="nav-link" href="{% url 'pelicula-list' %}">Catálogo</a></strong>
+                    </li>
+                    <li class="nav-item">
+                        <strong><a class="nav-link" href="{% url 'agregarpelicula' %}">Nueva Película</a></strong>
+                    </li>
+                    <li class="nav-item">
+                        <strong><a class="nav-link" href="{% url 'gestion_peliculas' %}">Gestion de Películas</a></strong>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <footer>
+        <p>© Warner Bros. 2024 Todos los derechos reservados.</p>
+        <strong>
+            <a href="{% url 'atencion-al-cliente' %}" class="customer-service-button">
+                <i class="fas fa-headset"></i>
+                Atención al Cliente
+            </a>
+        </strong>
+    </footer>
+
+    <!-- Agrego los scripts de Bootstrap y jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

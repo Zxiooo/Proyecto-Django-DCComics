@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mb-4" style="color: rgba(255, 242, 188, 0.979); margin-top: 20px; margin-left: 10px;">
+        Detalle de {{ pelicula.get_tipo_display }}: {{ pelicula.nombre }}
+    </h2>
+
+    <div class="card" style="width: 600px;">
+        <div class="card-body">
+            {% if pelicula.imagen %}
+            <img src="{{ pelicula.imagen.url }}" alt="{{ pelicula.nombre }}" class="img-fluid mb-4" style="width: 300px;">
+            {% else %}
+            <p class="mb-4">No hay imagen disponible.</p>
+            {% endif %}
+            <p class="card-text"><strong>Sucursal:</strong> {{ pelicula.sucursal }}</p>
+            <p class="card-text"><strong>Tipo:</strong> {{ pelicula.get_tipo_display }}</p>
+            <p class="card-text"><strong>Género:</strong> {{ pelicula.get_genero_display }}</p>
+            <p class="card-text"><strong>Clasificación:</strong> {{ pelicula.get_clasificacion_display }}</p>
+            <p class="card-text"><strong>Duración:</strong> {{ pelicula.duracion }} minutos</p>
+            <p class="card-text"><strong>Reseña:</strong> {{ pelicula.resena }}</p>
+            <p class="card-text"><strong>Sala:</strong> {{ pelicula.sala }}</p>
+            <p class="card-text"><strong>Fecha de Exhibición:</strong> {{ pelicula.fecha_exhibicion }}</p>
+            <p class="card-text"><strong>Hora de Exhibición:</strong> {{ pelicula.hora_exhibicion }}</p>
+            <p class="card-text"><strong>Valor del Ticket:</strong> {{ pelicula.valor_ticket }}</p>
+
+            <h4>Clasificación</h4>
+            <div class="estrellas">
+                {% for i in "12345" %}
+                <span class="estrella" data-value="{{ i }}">★</span>
+                {% endfor %}
+            </div>
+            <p id="mensaje-calificacion"></p>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <a href="{% url 'editar-pelicula' id=pelicula.id %}" class="btn btn-warning">Editar</a>
+        <a href="{% url 'eliminar-pelicula' id=pelicula.id %}" class="btn btn-danger"
+            onclick="return confirm('¿Estás seguro de que deseas eliminar a {{ pelicula.nombre }}?')">Eliminar</a>
+        <a href="{% url 'pelicula-list' %}" class="btn btn-primary">Volver al Listado</a>
+    </div>
+</div>
+
+
+<script>
+    const estrellas = document.querySelectorAll('.estrella');
+    const mensaje = document.getElementById('mensaje-calificacion');
+    let calificacionSeleccionada = 0; // Variable para almacenar la calificación seleccionada
+
+    estrellas.forEach(estrella => {
+        estrella.addEventListener('click', () => {
+            const valor = estrella.getAttribute('data-value');
+            
+            // Si la estrella seleccionada ya es la misma que la calificación, deseleccionar
+            if (calificacionSeleccionada === valor) {
+                calificacionSeleccionada = 0; // Restablecer la calificación
+                mensaje.textContent = 'No has calificado aún.';
+            } else {
+                calificacionSeleccionada = valor; // Guardar la nueva calificación
+                mensaje.textContent = `Has calificado con ${calificacionSeleccionada} estrellas.`;
+            }
+            
+            // Rellenar las estrellas seleccionadas
+            estrellas.forEach((e, index) => {
+                e.style.color = index < calificacionSeleccionada ? 'white' : 'black'; // Color para estrellas seleccionadas
+            });
+        });
+
+        estrella.addEventListener('mouseover', () => {
+            const valorHover = estrella.getAttribute('data-value');
+            estrellas.forEach((e, index) => {
+                e.style.color = index < valorHover ? 'white' : 'black'; // Color al pasar el mouse
+            });
+        });
+
+        estrella.addEventListener('mouseout', () => {
+            // Volver a aplicar el color según la calificación seleccionada
+            estrellas.forEach((e, index) => {
+                e.style.color = index < calificacionSeleccionada ? 'white' : 'black';
+            });
+        });
+    });
+</script>
+
+<style>
+    .estrellas {
+        display: flex;
+    }
+
+    .estrella {
+        font-size: 30px;
+        cursor: pointer;
+        color: black;
+        transition: color 0.2s;
+    }
+</style>
+
+{% endblock %}

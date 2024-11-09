@@ -1,0 +1,224 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<style>
+  /* Estilos para el filtro */
+  .filter-container {
+    width: 160px; /* Ajusta el ancho */
+    position: fixed;
+    top: 100px;
+    left: 5px;
+    /*background-color: rgba(10, 15, 61, 0.9);*/
+    background: linear-gradient(135deg, rgba(10, 15, 61, 0.9) 0%, rgba(20, 29, 97, 0.9) 100%);
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    opacity: 0.9;
+  }
+
+  .filter-container h4{
+    font-size: 20px;
+  }
+
+  .filter-container a {
+    display: block; /* Cada opción en una línea */
+    margin: 10px 0; /* Espaciado entre enlaces */
+    text-decoration: none; /* Sin subrayado */
+    color: rgba(255, 242, 188, 0.979); /* Color del texto del enlace */
+    padding: 10px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados para los enlaces */
+    font-size: 17px;
+  }
+
+  .filter-container a:hover {
+    background-color: rgba(28, 39, 138, 0.9); /* Efecto hover */
+  }
+
+  .card {
+    height: 550px;
+    width: 300px;
+    transition: transform 0.3s ease; /* Transición a la propiedad transform */
+  }
+
+  .card:hover {
+    transform: scale(1.05); /* Escalamos el card al hacer hover */
+  }
+
+  .card img {
+    max-height: 100%;
+  }
+
+  .card-body {
+    text-align: center;
+  }
+
+  .card-body h5 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .card-body .btn {
+    width: 100%;
+    margin-top: 10px;
+    /*background: linear-gradient(135deg, rgb(53, 134, 255) 0%, rgb(247, 247, 247) 100%); /* Degradado de azul a gris */
+    background: linear-gradient(135deg, rgb(233, 233, 233) 0%, rgb(185, 185, 185) 100%);
+    color: rgb(17, 17, 17); /* Texto blanco */
+    border: none;
+    padding: 12px 24px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.4s ease-in-out;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Sombra para dar efecto de profundidad */
+  }
+
+  .titulos{
+    margin-left: 40px;
+  }
+
+  .titulos h2{
+    font-size: 30px;
+    color: rgba(255, 242, 188, 0.979);
+  }
+
+</style>
+
+<div class="filter-container">
+  <h4>Filtrar por</h4>
+  <strong>
+  <a href="?filtro=todo">Todo</a>
+  <a href="?filtro=pelicula">Películas</a>
+  <a href="?filtro=serie">Series</a>
+  </strong>
+</div>
+
+<div class="container mt-5" style="text-align: center;"> <!-- Ajusta el margen para dejar espacio para el menú -->
+  <h2 style="color: rgba(255, 242, 188, 0.979);">Catálogo</h2>
+</div>
+
+{% if not request.GET.filtro or request.GET.filtro == "todo" %}
+  <!-- Mostrar películas y series separadas cuando no hay filtro o se selecciona "Todo" -->
+
+  <div class="titulos">
+    <h2>Películas</h2>
+  </div>
+
+  <div class="row mx-auto">
+    {% for pelicula in peliculas %}
+      {% if pelicula.get_tipo_display == "Pelicula" %}
+        <div class="col-md-4 mb-4">
+          <div class="card mx-auto">
+            {% if pelicula.imagen %}
+              <img src="{{ pelicula.imagen.url }}" class="card-img-top" alt="{{ pelicula.nombre }}" style="max-height: 100%;">
+            {% else %}
+              <img src="{% static 'images/not-found.png' %}" class="card-img-top" alt="Sin imagen" style="max-height: 100%;">
+            {% endif %}
+            <div class="card-body text-center">
+              <h5 class="card-title">{{ pelicula.nombre }}</h5>
+              <p class="card-text"><strong>Género:</strong> {{ pelicula.get_genero_display }}</p>
+              <p class="card-text"><strong>Clasificación:</strong> {{ pelicula.get_clasificacion_display }}</p>
+              <div class="mx-auto ta-c10">
+                <a href="{% url 'pelicula-detail' id=pelicula.id %}" class="btn btn-info w-100">Ver</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <div class="titulos">
+    <h2>Series</h2>
+  </div>
+
+  <div class="row mx-auto">
+    {% for pelicula in peliculas %}
+      {% if pelicula.get_tipo_display == "Serie" %}
+        <div class="col-md-4 mb-4">
+          <div class="card mx-auto">
+            {% if pelicula.imagen %}
+              <img src="{{ pelicula.imagen.url }}" class="card-img-top" alt="{{ pelicula.nombre }}" style="max-height: 100%;">
+            {% else %}
+              <img src="{% static 'images/not-found.png' %}" class="card-img-top" alt="Sin imagen" style="max-height: 100%;">
+            {% endif %}
+            <div class="card-body text-center">
+              <h5 class="card-title">{{ pelicula.nombre }}</h5>
+              <p class="card-text"><strong>Género:</strong> {{ pelicula.get_genero_display }}</p>
+              <p class="card-text"><strong>Clasificación:</strong> {{ pelicula.get_clasificacion_display }}</p>
+              <div class="mx-auto ta-c10">
+                <a href="{% url 'pelicula-detail' id=pelicula.id %}" class="btn btn-info w-100">Ver</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+{% elif request.GET.filtro == "pelicula" %}
+  <!-- Mostrar solo películas si se selecciona el filtro de películas -->
+  <div class="titulos">
+    <h2>Películas</h2>
+  </div>
+
+  <div class="row mx-auto">
+    {% for pelicula in peliculas %}
+      {% if pelicula.get_tipo_display == "Pelicula" %}
+        <div class="col-md-4 mb-4">
+          <div class="card mx-auto">
+            {% if pelicula.imagen %}
+              <img src="{{ pelicula.imagen.url }}" class="card-img-top" alt="{{ pelicula.nombre }}" style="max-height: 100%;">
+            {% else %}
+              <img src="{% static 'images/not-found.png' %}" class="card-img-top" alt="Sin imagen" style="max-height: 100%;">
+            {% endif %}
+            <div class="card-body text-center">
+              <h5 class="card-title">{{ pelicula.nombre }}</h5>
+              <p class="card-text"><strong>Género:</strong> {{ pelicula.get_genero_display }}</p>
+              <p class="card-text"><strong>Clasificación:</strong> {{ pelicula.get_clasificacion_display }}</p>
+              <div class="mx-auto ta-c10">
+                <a href="{% url 'pelicula-detail' id=pelicula.id %}" class="btn btn-info w-100">Ver</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+{% elif request.GET.filtro == "serie" %}
+  <!-- Mostrar solo series si se selecciona el filtro de series -->
+  <div class="titulos">
+    <h2>Series</h2>
+  </div>
+
+  <div class="row mx-auto">
+    {% for pelicula in peliculas %}
+      {% if pelicula.get_tipo_display == "Serie" %}
+        <div class="col-md-4 mb-4">
+          <div class="card mx-auto">
+            {% if pelicula.imagen %}
+              <img src="{{ pelicula.imagen.url }}" class="card-img-top" alt="{{ pelicula.nombre }}" style="max-height: 100%;">
+            {% else %}
+              <img src="{% static 'images/not-found.png' %}" class="card-img-top" alt="Sin imagen" style="max-height: 100%;">
+            {% endif %}
+            <div class="card-body text-center">
+              <h5 class="card-title">{{ pelicula.nombre }}</h5>
+              <p class="card-text"><strong>Género:</strong> {{ pelicula.get_genero_display }}</p>
+              <p class="card-text"><strong>Clasificación:</strong> {{ pelicula.get_clasificacion_display }}</p>
+              <div class="mx-auto ta-c10">
+                <a href="{% url 'pelicula-detail' id=pelicula.id %}" class="btn btn-info w-100">Ver</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% endblock %}
